@@ -1,8 +1,5 @@
 import Router from "express";
-import client from "./client.js";
-import config from "./config.js";
-
-const collection = client.db(config.db.name).collection(config.db.collection);
+import controller from "./controller.js";
 
 const router = new Router();
 
@@ -12,7 +9,8 @@ router.get("/", (_, res) => {
 });
 
 router.get("/current-listings", async (_, res) => {
-  const currentListings = await collection.find({}).limit(5).toArray();
+  const currentListings = await controller.index();
+
   res.json(currentListings);
 });
 
