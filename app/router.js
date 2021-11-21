@@ -8,8 +8,8 @@ router.get("/", (_, res) => {
   res.send("Hello from API!");
 });
 
-router.get("/current-listings", async (_, res) => {
-  const currentListings = await controller.index();
+router.get("/current-listings", async (req, res) => {
+  const currentListings = await controller.index(req.query);
 
   res.json(currentListings);
 });
