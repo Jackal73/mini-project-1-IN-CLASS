@@ -1,6 +1,7 @@
 import client from "./client.js";
 import config from "./config.js";
 
+const collection = client.db(config.db.name).collection(config.db.collection);
 export default {
   // get all the stuff
   index(queryParams) {
