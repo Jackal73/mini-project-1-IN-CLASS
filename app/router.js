@@ -14,4 +14,9 @@ router.get("/current-listings", async (req, res) => {
   res.json(currentListings);
 });
 
+router.post("/reviews/:id", async (req, res) => {
+  console.log(req.body, req.params.id);
+  res.send("hello");
+});
+
 export default router;
