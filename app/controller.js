@@ -1,22 +1,24 @@
 import client from "./client.js";
 import config from "./config.js";
+import { v4 as uuidv4 } from "uuid";
 
 const collection = client.db(config.db.name).collection(config.db.collection);
 export default {
   // get all the stuff
   index(queryParams) {
-    // Destructure queryParams, taking out limit, using spread operator, calling rest of params 'filters' .
-    const { limit, ...filters } = queryParams;
-
-    // console.log(limit, filters);
-    // console.log(Object.entries(filters));
-
-    return client
-      .db(config.db.name)
-      .collection(config.db.collection)
+    return collection
       .find({})
       .limit(Number(queryParams.limit) || 20)
       .toArray();
+  },
+
+  createReview(listingId, newReview) {
+    // Use 'uuid' (universally unique id) for _id generation.
+    newReview._id = uuidv4();
+    return collection.updateOne(
+      { _id: listingId },
+      { $push: { reviews: newReview } }
+    );
   },
 };
 
@@ -57,3 +59,10 @@ export default {
 // );
 
 // console.log(listingsFilters);
+
+// --------------------------- Extra ---------------------
+// Destructure queryParams, taking out limit, using spread operator, calling rest of params 'filters' .
+// const { limit, ...filters } = queryParams;
+
+// console.log(limit, filters);
+// console.log(Object.entries(filters));

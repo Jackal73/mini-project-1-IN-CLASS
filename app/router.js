@@ -15,8 +15,9 @@ router.get("/current-listings", async (req, res) => {
 });
 
 router.post("/reviews/:id", async (req, res) => {
-  console.log(req.body, req.params.id);
-  res.send("hello");
+  // console.log(req.body, req.params.id);
+  const newReview = controller.createReview(req.params.id, req.body);
+  res.json(newReview);
 });
 
 export default router;
